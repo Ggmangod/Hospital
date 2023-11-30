@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход и Регистрация - Больница "XYZ"</title>
+    <style>
+        /* Стили для страницы */
+        /* ... (ваши стили) ... */
+        .tab {
+            display: none;
+        }
+    </style>
+    <script>
+        function openTab(tabName) {
+            var i;
+            var x = document.getElementsByClassName("tab");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            document.getElementById(tabName).style.display = "block";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Вход и Регистрация - Больница "XYZ"</h1>
+        <button onclick="openTab('login')">Вход</button>
+        <button onclick="openTab('register')">Регистрация</button>
+    </header>
+    <div class="container">
+        <!-- Форма входа -->
+        <div id="login" class="tab">
+            <form action="process_login.php" method="POST">
+                <!-- ... (форма входа) ... -->
+                <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход - Больница "XYZ"</title>
+    <style>
+        /* Стили для страницы */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #003366;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        form label,
+        form input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        form input[type="submit"] {
+            width: auto;
+            cursor: pointer;
+            padding: 5px 15px;
+            background-color: #003366;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+        }
+        form input[type="submit"]:hover {
+            background-color: #001f33;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Вход - Больница "XYZ"</h1>
+    </header>
+    <div class="container">
+        <form action="process_login.php" method="POST">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+
+            <input type="submit" value="Войти">
+        </form>
+    </div>
+</body>
+</html>
+            </form>
+        </div>
+        <!-- Форма регистрации -->
+        <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация - Больница "XYZ"</title>
+    <style>
+        /* Стили для страницы */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #003366;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        form label,
+        form input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        form input[type="submit"] {
+            width: auto;
+            cursor: pointer;
+            padding: 5px 15px;
+            background-color: #003366;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+        }
+        form input[type="submit"]:hover {
+            background-color: #001f33;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Регистрация - Больница "XYZ"</h1>
+    </header>
+    <div class="container">
+        <form>
+            <label for="fullname">ФИО:</label>
+            <input type="text" id="fullname" name="fullname" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Телефон:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+
+            <input type="submit" value="Зарегистрироваться">
+        </form>
+    </div>
+</body>
+</html>
+        <div id="register" class="tab">
+            <form action="process_registration.php" method="POST">
+                <!-- ... (остальные поля регистрации) ... -->
+                <input type="submit" value="Зарегистрироваться">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

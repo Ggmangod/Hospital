@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Связаться с врачом - Больница "Здоровье"</title>
+    <style>
+                body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+        label,
+        textarea,
+        select,
+        input[type="submit"] {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: auto;
+            cursor: pointer;
+            padding: 5px 15px;
+            background-color: #003366;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+        }
+        input[type="submit"]:hover {
+            background-color: #001f33;
+        }
+    </style>
+</head>
+<body>
+    <h1>Связаться с врачом</h1>
+    <form action="process_contact.php" method="POST" id="contactForm">
+        <label for="doctor">Выберите врача:</label>
+        <select id="doctor" name="doctor">
+            <option value="therapist">Терапевт</option>
+            <option value="surgeon">Хирург</option>
+            <option value="gynecologist">Гинеколог</option>
+            <!-- Добавьте других врачей по аналогии -->
+        </select>
+
+        <label for="message">Сообщение:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+
+        <input type="submit" value="Отправить">
+    </form>
+
+    <div id="successMessage" style="display: none; text-align: center;">
+        Сообщение отправлено. Ожидайте ответа.
+    </div>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Предотвратить отправку формы по умолчанию
+
+            // Ваш код для отправки данных формы (AJAX, fetch и т.д.)
+            // Здесь можно добавить код для отправки данных формы на сервер
+
+            // Показать сообщение об успешной отправке
+            document.getElementById("successMessage").style.display = "block";
+
+            // Очистить форму (если нужно)
+            document.getElementById("contactForm").reset();
+        });
+    </script>
+</body>
+</html>
