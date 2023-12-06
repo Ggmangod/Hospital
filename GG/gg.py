@@ -4,6 +4,9 @@ from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
 
+# Declare username as a global variable
+username = ''
+
 class PlannerApp(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -31,13 +34,14 @@ class PlannerApp(App):
         return self.layout
 
     def register_user(self, instance):
+        global username  # Declare username as global
         username = self.username_input.text
         password = self.password_input.text
 
         if username and password:
             with open(self.users_file, 'a') as file:
                 file.write(f'{username}:{password}\n')
-            
+
             self.username_input.text = ''
             self.password_input.text = ''
             self.layout.add_widget(Label(text='Пользователь зарегистрирован', size_hint=(1, None), height=40))
@@ -45,6 +49,7 @@ class PlannerApp(App):
             self.layout.add_widget(Label(text='Введите имя пользователя и пароль', size_hint=(1, None), height=40))
 
     def login_user(self, instance):
+        global username  # Declare username as global
         username = self.username_input.text
         password = self.password_input.text
 
@@ -64,16 +69,6 @@ class PlannerApp(App):
             self.layout.add_widget(Label(text='Введите имя пользователя и пароль', size_hint=(1, None), height=40))
 
     def show_planner(self):
-
-        class PlannerApp(App):
-            def __init__(self, username, **kwargs):
-                super().__init__(**kwargs)
-            self.username = username
-            self.task_file = f'{self.username}_tasks.txt'
-
-            def build(self):
-                self.layout = BoxLayout(orientation='vertical')
-
         self.task_input = TextInput(hint_text='Введите задачу', size_hint=(1, None), height=40)
         self.layout.add_widget(self.task_input)
 
@@ -87,8 +82,6 @@ class PlannerApp(App):
         self.task_list = BoxLayout(orientation='vertical', size_hint_y=None)
         self.load_tasks()
         self.layout.add_widget(self.task_list)
-
-        return self.layout
 
     def add_task(self, instance):
         task_text = self.task_input.text
