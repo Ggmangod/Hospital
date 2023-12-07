@@ -99,12 +99,11 @@
                     const username = document.getElementById('username').value;
                     const password = document.getElementById('password').value;
         
-                    // Примерная проверка имени пользователя и пароля (вам нужно реализовать проверку на сервере)
+                    
                     if (username !== 'correctUsername' || password !== 'correctPassword') {
                         errorMessage.textContent = 'Ошибка входа: неверное имя пользователя или пароль';
                         errorMessage.style.display = 'block';
-                    } else {
-                        // Если вход успешен, перенаправить на указанную страницу
+                    } else (username === 'correctUsername' || password === 'correctPassword') {
                         window.location.href = 'hospital_S.html';
                     }
                 });

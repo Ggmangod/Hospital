@@ -110,17 +110,15 @@
                 
                 loginForm.addEventListener('submit', function(event) {
                     event.preventDefault();
-                    // Получение значения из поля ввода username
                     username = document.getElementById('username').value;
                     const password = document.getElementById('password').value;
         
-                    // Здесь убедитесь, что используете правильные данные для проверки имени пользователя и пароля
-                    // На данный момент это 'correctUsername' и 'correctPassword'
                     if (username !== 'correctUsername' || password !== 'correctPassword') {
                         errorMessage.textContent = 'Ошибка входа: неверное имя пользователя или пароль';
                         errorMessage.style.display = 'block';
-                    } else {
-                        // Если вход успешен, перенаправить на указанную страницу
+                    } 
+                    else (username == 'correctUsername' || password == 'correctPassword') 
+                    {
                         window.location.href = 'hospital_S.html';
                     }
                 });
@@ -149,7 +147,6 @@
         </div>
     </div>
 
-    <!-- Скрипт для отображения сообщения об успешной регистрации -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const registerForm = document.querySelector('#register form');
@@ -157,8 +154,6 @@
 
             registerForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-                // Отправка данных регистрации (process_registration.php)
-                // Отображение сообщения об успешной регистрации и переход на форму входа
                 successMessage.style.display = 'block';
                 setTimeout(function() {
                     successMessage.style.display = 'none';
