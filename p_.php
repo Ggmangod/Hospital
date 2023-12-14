@@ -1,26 +1,66 @@
 <?php
-// Проверка, была ли отправлена форма с данными для входа
+session_start(); // Start the session
+
+// Function to read user credentials from the text file
+function readUserCredentials() {
+    $file = 'user_credentials.txt';
+    $credentials = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $users = [];
+
+    foreach ($credentials as $line) {
+        $data = explode(':', $line);
+        $users[$data[0]] = $data[1];
+    }
+
+    return $users;
+}
+
+// Function to save user credentials to the text file
+function saveUserCredentials($username, $password) {
+    $file = 'user_credentials.txt';
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $line = "$username:$hashedPassword" . PHP_EOL;
+
+    // Append the new user credentials to the file
+    file_put_contents($file, $line, FILE_APPEND | LOCK_EX);
+}
+
+// Function to validate login credentials
+function validateCredentials($username, $password) {
+    $users = readUserCredentials();
+
+    if (isset($users[$username]) && password_verify($password, $users[$username])) {
+        return true; // Authentication successful
+    }
+    return false; // Authentication failed
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Получение данных из формы
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    if (isset($_POST['register'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
-    // Проверка данных на соответствие вашим критериям для входа
-    // В данном примере проверяется, что имя пользователя и пароль равны 'correctUsername' и 'correctPassword'
-    if ($username === 'correctUsername' && $password === 'correctPassword') {
-        // Если вход успешен, выполните необходимые действия, например, установите сессию или отправьте пользователя на другую страницу
-        // Пример установки сессии:
-        session_start();
-        $_SESSION['username'] = $username;
+        // Save new user credentials
+        saveUserCredentials($username, $password);
 
-        // Затем перенаправьте пользователя на нужную страницу
-        header('Location: hospital_S.html');
+        // Redirect to login page after successful registration
+        header('Location: login.html');
         exit();
     } else {
-        // Если данные для входа неверны, можно выполнить действия по обработке ошибки
-        // Например, перенаправить обратно на страницу входа с сообщением об ошибке
-        header('Location: login.html?error=invalid_credentials');
-        exit();
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        // Validate the submitted credentials for login
+        if (validateCredentials($username, $password)) {
+            // If the credentials are valid, set the session and redirect to the dashboard
+            $_SESSION['username'] = $username;
+            header('Location: hospital_S.html');
+            exit();
+        } else {
+            // If credentials are invalid, redirect back to the login page with an error message
+            header('Location: login.html?error=invalid_credentials');
+            exit();
+        }
     }
 }
 ?>
