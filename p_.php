@@ -1,7 +1,7 @@
 <?php
-session_start(); // Start the session
+session_start();
 
-// Function to read user credentials from the text file
+// Функция для чтения учетных данных из файла
 function readUserCredentials() {
     $file = 'user_credentials.txt';
     $credentials = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -9,57 +9,51 @@ function readUserCredentials() {
 
     foreach ($credentials as $line) {
         $data = explode(':', $line);
-        $users[$data[0]] = $data[1];
+        $users[$data[0]] = [
+            'password' => $data[1],
+            'email' => $data[2],
+            'phone' => $data[3]
+        ];
     }
 
     return $users;
 }
 
-// Function to save user credentials to the text file
-function saveUserCredentials($username, $password) {
+// Функция для сохранения учетных данных в файл
+function saveUserCredentials($username, $password, $email, $phone) {
     $file = 'user_credentials.txt';
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $line = "$username:$hashedPassword" . PHP_EOL;
+    $line = "$username:$hashedPassword:$email:$phone" . PHP_EOL;
 
-    // Append the new user credentials to the file
+    // Добавление новых учетных данных в файл
     file_put_contents($file, $line, FILE_APPEND | LOCK_EX);
-}
-
-// Function to validate login credentials
-function validateCredentials($username, $password) {
-    $users = readUserCredentials();
-
-    if (isset($users[$username]) && password_verify($password, $users[$username])) {
-        return true; // Authentication successful
-    }
-    return false; // Authentication failed
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['register'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
 
-        // Save new user credentials
-        saveUserCredentials($username, $password);
+        // Сохранение новых учетных данных
+        saveUserCredentials($username, $password, $email, $phone);
 
-        // Redirect to login page after successful registration
-        header('Location: login.html');
-        exit();
+        // Отправка ответа в формате JSON об успешной регистрации
+        echo json_encode(['success' => true]);
     } else {
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        // Validate the submitted credentials for login
-        if (validateCredentials($username, $password)) {
-            // If the credentials are valid, set the session and redirect to the dashboard
+        $users = readUserCredentials();
+
+        if (isset($users[$username]) && password_verify($password, $users[$username]['password'])) {
             $_SESSION['username'] = $username;
-            header('Location: hospital_S.html');
-            exit();
+            // Отправка ответа в формате JSON об успешном входе
+            echo json_encode(['success' => true]);
         } else {
-            // If credentials are invalid, redirect back to the login page with an error message
-            header('Location: login.html?error=invalid_credentials');
-            exit();
+            // Отправка ответа в формате JSON о неудачном входе
+            echo json_encode(['success' => false, 'message' => 'Неверное имя пользователя или пароль']);
         }
     }
 }
